@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class BoardSceneManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("CenterStuff")]
+    [SerializeField] private GameObject _centerPiecePrefab;
+    [SerializeField] private RectTransform[] _banks;
+
+    private void Awake()
     {
+        FillBanks();
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FillBanks()
     {
-        
+        float radius = 25f;
+        foreach (var bank in _banks) {
+            for (int i = 0; i < 4; i++) {
+                GameObject piece = Instantiate(_centerPiecePrefab, bank);
+
+                RectTransform rt = piece.GetComponent<RectTransform>();
+
+                float angle = (360f / 4) * i + Random.Range(-10f, 10f);
+                Vector2 pos = new Vector2(
+                    Mathf.Cos(angle * Mathf.Deg2Rad),
+                    Mathf.Sin(angle * Mathf.Deg2Rad)
+                ) * radius;
+
+                rt.anchoredPosition = pos;
+                rt.localRotation = Quaternion.Euler(0, 0, Random.Range(-25f, 25f));
+            }
+        }
     }
 }
