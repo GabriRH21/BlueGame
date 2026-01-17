@@ -1,13 +1,15 @@
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PieceController : MonoBehaviour
+public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public PieceType pieceType;
     private Color32 color;
     private void Awake()
     {
         SelectType();
+        this.enabled = false;
     }
 
     private void SelectType()
@@ -34,5 +36,15 @@ public class PieceController : MonoBehaviour
                 break;
         }
         this.gameObject.GetComponent<Image>().color = color;
+    }
+
+    public void OnPointerEnter(PointerEventData p)
+    {
+        Debug.Log("Hola");
+    }
+
+    public void OnPointerExit(PointerEventData p)
+    {
+        
     }
 }
