@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image _focus;
+    [SerializeField] private Button _button;
+    [SerializeField] private UIZoomManager _zoomManager;
 
     private bool _hoverFlag = false;
 
     private void Awake()
     {
-        this.gameObject.GetComponent<Button>().onClick.AddListener(SelectThisBank);
+        _button.onClick.AddListener(SelectThisBank);
         _focus.gameObject.SetActive(false);
     }
 
@@ -45,7 +47,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             yield return null;
         }
 
-        rect.localScale = endScale; // Asegura que llegue al final exacto
+        rect.localScale = endScale; 
     }
 
     public void OnPointerExit(PointerEventData p)
@@ -57,6 +59,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void SelectThisBank()
     {
-        
+        Debug.Log("sad");
+        _zoomManager.ZoomTo(GetComponent<RectTransform>());
     }
 }
