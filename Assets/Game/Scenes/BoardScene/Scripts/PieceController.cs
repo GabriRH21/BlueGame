@@ -2,12 +2,14 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public PieceType pieceType;
     private Color32 color;
     private bool _hoverFlag = false;
+    private List<PieceController> Brothers = new List<PieceController>();
     [SerializeField] private Image _focus;
 
     private void Awake()
@@ -45,17 +47,37 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData p)
     {
-        _hoverFlag = true;
-        _focus.gameObject.SetActive(true);
-        Debug.Log("hola");
-        StartCoroutine(FocusAnimation());
+        FocusAnim(true);
+        foreach (var bro in Brothers) {
+            bro.FocusAnim(true);
+        }
     }
 
     public void OnPointerExit(PointerEventData p)
     {
-        _hoverFlag = false;
-        StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0f));
-        _focus.gameObject.SetActive(false); 
+        FocusAnim(false);
+        foreach (var bro in Brothers) {
+            bro.FocusAnim(false);
+        }
+    }
+
+    public void FocusAnim(bool active)
+    {
+        _hoverFlag = active;
+        _focus.gameObject.SetActive(active);
+        if (active) {
+            StartCoroutine(FocusAnimation());
+        } else {
+            StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0f));
+        }
+        
+    }
+
+    public void AddBrother(PieceController brother)
+    {
+        if (!Brothers.Contains(brother)) {
+            Brothers.Add(brother);
+        }
     }
 
     private IEnumerator FocusAnimation()

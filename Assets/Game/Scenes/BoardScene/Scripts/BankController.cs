@@ -95,8 +95,26 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         for (int i = 0; i < transform.childCount; i++) {
             Transform child = transform.GetChild(i);
             if (child.gameObject.GetComponent<PieceController>() != null) {
-                child.gameObject.GetComponent<PieceController>().enabled = activate;
-                pieces.Add(child.gameObject.GetComponent<PieceController>());
+                PieceController piece = child.gameObject.GetComponent<PieceController>();
+                piece.enabled = activate;
+                if (activate) {
+                    pieces.Add(piece);
+                    SetBrothers(piece);
+                }
+            }
+        }
+        
+        if (!activate) {
+            pieces = new List<PieceController>();
+        }
+    }
+
+    private void SetBrothers(PieceController newPiece)
+    {
+        foreach (var piece in pieces) {
+            if (piece.pieceType == newPiece.pieceType && piece != newPiece) {
+                piece.AddBrother(newPiece);
+                newPiece.AddBrother(piece);
             }
         }
     }
