@@ -8,6 +8,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private Image _focus;
     [SerializeField] private Button _button;
     [SerializeField] private UIZoomManager _zoomManager;
+    [SerializeField] private Button _backButton;
 
     private bool _hoverFlag = false;
 
@@ -15,6 +16,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         _button.onClick.AddListener(SelectThisBank);
         _focus.gameObject.SetActive(false);
+        _backButton.gameObject.SetActive(false);
     }
 
     public void OnPointerEnter(PointerEventData p)
@@ -59,7 +61,21 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void SelectThisBank()
     {
-        Debug.Log("sad");
+        _button.enabled = false;
         _zoomManager.ZoomTo(GetComponent<RectTransform>());
+        _backButton.gameObject.SetActive(true);                             //ToDo: maybe I can try to do a fadein animation for the button
+        _backButton.onClick.RemoveAllListeners();
+        _backButton.onClick.AddListener(OnBackButtonPressed);
+        ActivatePieces();
+    }
+
+    private void OnBackButtonPressed()
+    {
+        _zoomManager.ResetZoom(GetComponent<RectTransform>());
+    }
+
+    private void ActivatePieces()
+    {
+        
     }
 }

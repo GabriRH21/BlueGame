@@ -10,6 +10,11 @@ public class UIZoomManager : MonoBehaviour
 
     private Vector3 originalScale;
     private Vector2 originalPos;
+    private float bankExtraScale = 2f;
+    RectTransform currentBank;
+    Vector3 originalContainerScale = Vector3.one;
+    Vector2 originalContainerPos = Vector2.zero;
+    Vector3 originalBankScale = Vector3.one;
 
     void Start()
     {
@@ -23,15 +28,17 @@ public class UIZoomManager : MonoBehaviour
         StartCoroutine(ZoomCoroutine(target, zoomScale));
     }
 
-    public void ResetZoom()
+    public void ResetZoom(RectTransform target)
     {
         StopAllCoroutines();
-        StartCoroutine(ZoomCoroutine(null, 3f, true));
+        StartCoroutine(ZoomOutCoroutine(target));
     }
 
     IEnumerator ZoomCoroutine(RectTransform target, float targetScale, bool zoomOut=false)
     {
-        float bankExtraScale = 2f;
+        currentBank = target;
+        originalBankScale = target.localScale;
+
        RectTransform canvasRect = zoomContainer.parent as RectTransform;
 
         Vector3 containerStartScale = zoomContainer.localScale;
@@ -69,5 +76,43 @@ public class UIZoomManager : MonoBehaviour
         zoomContainer.localScale = containerEndScale;
         zoomContainer.anchoredPosition = containerEndPos;
         target.localScale = bankEndScale;
+    }
+
+    IEnumerator ZoomOutCoroutine(RectTransform currentBank)
+    {
+        if (currentBank == null)
+            yield break;
+
+        Vector3 containerStartScale = zoomContainer.localScale;
+        Vector3 containerEndScale = originalContainerScale;
+
+        Vector2 containerStartPos = zoomContainer.anchoredPosition;
+        Vector2 containerEndPos = originalContainerPos;
+
+        Vector3 bankStartScale = currentBank.localScale;
+        Vector3 bankEndScale = originalBankScale;
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+
+            zoomContainer.localScale =
+                Vector3.Lerp(containerStartScale, containerEndScale, t);
+
+            zoomContainer.anchoredPosition =
+                Vector2.Lerp(containerStartPos, containerEndPos, t);
+
+            currentBank.localScale =
+                Vector3.Lerp(bankStartScale, bankEndScale, t);
+
+            yield return null;
+        }
+
+        zoomContainer.localScale = containerEndScale;
+        zoomContainer.anchoredPosition = containerEndPos;
+        currentBank.localScale = bankEndScale;
+
+        currentBank = null;
     }
 }
