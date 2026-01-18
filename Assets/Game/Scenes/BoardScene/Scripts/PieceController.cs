@@ -1,15 +1,20 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public PieceType pieceType;
     private Color32 color;
+    private bool _hoverFlag = false;
+    [SerializeField] private Image _focus;
+
     private void Awake()
     {
         SelectType();
         this.enabled = false;
+        _focus.gameObject.SetActive(false);
     }
 
     private void SelectType()
@@ -40,11 +45,42 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData p)
     {
-        Debug.Log("Hola");
+        _hoverFlag = true;
+        _focus.gameObject.SetActive(true);
+        Debug.Log("hola");
+        StartCoroutine(FocusAnimation());
     }
 
     public void OnPointerExit(PointerEventData p)
     {
-        
+        _hoverFlag = false;
+        StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0f));
+        _focus.gameObject.SetActive(false); 
+    }
+
+    private IEnumerator FocusAnimation()
+    {
+        while (_hoverFlag)
+        {
+            yield return StartCoroutine(ScaleTo(_focus.rectTransform, 1.25f, 0.5f));
+            yield return StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0.5f));
+            yield return new WaitForSeconds(0);
+        }
+    }
+
+    private IEnumerator ScaleTo(RectTransform rect, float target, float duration)
+    {
+        Vector3 startScale = rect.localScale;
+        Vector3 endScale = new Vector3(1,1,1) * target;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            rect.localScale = Vector3.Lerp(startScale, endScale, elapsed / duration);
+            yield return null;
+        }
+
+        rect.localScale = endScale; 
     }
 }

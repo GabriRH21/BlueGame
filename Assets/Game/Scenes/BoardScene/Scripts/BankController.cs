@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +11,10 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private UIZoomManager _zoomManager;
     [SerializeField] private Button _backButton;
 
+    private List<PieceController> pieces = new List<PieceController>();
+
     private bool _hoverFlag = false;
+    private bool _bankSelected = false;
 
     private void Awake()
     {
@@ -21,9 +25,11 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData p)
     {
-        _hoverFlag = true;
-        _focus.gameObject.SetActive(true);
-        StartCoroutine(FocusAnimation());
+        if (!_bankSelected) {
+           _hoverFlag = true;
+            _focus.gameObject.SetActive(true);
+            StartCoroutine(FocusAnimation()); 
+        }
     }
 
     private IEnumerator FocusAnimation()
@@ -62,6 +68,11 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void SelectThisBank()
     {
         _button.enabled = false;
+        _bankSelected = true;
+        
+        _hoverFlag = false;
+        StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0f));
+        _focus.gameObject.SetActive(false);
         _zoomManager.ZoomTo(GetComponent<RectTransform>());
         _backButton.gameObject.SetActive(true);                             //ToDo: maybe I can try to do a fadein animation for the button
         _backButton.onClick.RemoveAllListeners();
@@ -71,9 +82,11 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void OnBackButtonPressed()
     {
+        _bankSelected = false;
         _zoomManager.ResetZoom(GetComponent<RectTransform>());
         _button.enabled = true;
         _backButton.gameObject.SetActive(false);
+        _focus.gameObject.SetActive(true);
         ActivatePieces(false);
     }
 
@@ -83,6 +96,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             Transform child = transform.GetChild(i);
             if (child.gameObject.GetComponent<PieceController>() != null) {
                 child.gameObject.GetComponent<PieceController>().enabled = activate;
+                pieces.Add(child.gameObject.GetComponent<PieceController>());
             }
         }
     }
