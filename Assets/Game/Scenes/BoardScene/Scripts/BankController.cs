@@ -66,16 +66,24 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _backButton.gameObject.SetActive(true);                             //ToDo: maybe I can try to do a fadein animation for the button
         _backButton.onClick.RemoveAllListeners();
         _backButton.onClick.AddListener(OnBackButtonPressed);
-        ActivatePieces();
+        ActivatePieces(true);
     }
 
     private void OnBackButtonPressed()
     {
         _zoomManager.ResetZoom(GetComponent<RectTransform>());
+        _button.enabled = true;
+        _backButton.gameObject.SetActive(false);
+        ActivatePieces(false);
     }
 
-    private void ActivatePieces()
+    private void ActivatePieces(bool activate)
     {
-        
+        for (int i = 0; i < transform.childCount; i++) {
+            Transform child = transform.GetChild(i);
+            if (child.gameObject.GetComponent<PieceController>() != null) {
+                child.gameObject.GetComponent<PieceController>().enabled = activate;
+            }
+        }
     }
 }
