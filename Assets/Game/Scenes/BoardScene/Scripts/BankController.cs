@@ -97,9 +97,13 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (child.gameObject.GetComponent<PieceController>() != null) {
                 PieceController piece = child.gameObject.GetComponent<PieceController>();
                 piece.enabled = activate;
+                
                 if (activate) {
                     pieces.Add(piece);
+                    piece.TurnOn();
                     SetBrothers(piece);
+                } else {
+                    piece.turnOff();
                 }
             }
         }

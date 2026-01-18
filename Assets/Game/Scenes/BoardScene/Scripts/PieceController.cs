@@ -6,26 +6,44 @@ using System.Collections.Generic;
 
 public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+
+    [SerializeField] private Button _button;
+    [SerializeField] private Image _focus;
     public PieceType pieceType;
     private Color32 color;
     private bool _hoverFlag = false;
     private List<PieceController> Brothers = new List<PieceController>();
-    [SerializeField] private Image _focus;
 
-    private void Awake()
-    {
+    private void Awake() {
         SelectType();
-        this.enabled = false;
+
+
         _focus.gameObject.SetActive(false);
+        _button.onClick.AddListener(OnButtonClick);
+        _button.enabled = false;
+
+        this.enabled = false;
     }
 
-    private void SelectType()
-    {
+    public void TurnOn() {
+        _button.enabled = true;
+
+    }
+
+    public void turnOff() {
+        _button.enabled = false;
+        this.enabled = false;
+    }
+
+    private void OnButtonClick() {
+        
+    }
+
+    private void SelectType() {
         PieceType[] values = (PieceType[]) System.Enum.GetValues(typeof(PieceType));
         pieceType = values[Random.Range(0, values.Length)];
 
-        switch (pieceType)
-        {
+        switch (pieceType) {
             case PieceType.Red:
                 color = new Color32(255, 0, 0, 255);
                 break;
@@ -45,8 +63,7 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         this.gameObject.GetComponent<Image>().color = color;
     }
 
-    public void OnPointerEnter(PointerEventData p)
-    {
+    public void OnPointerEnter(PointerEventData p) {
         FocusAnim(true);
         foreach (var bro in Brothers) {
             bro.FocusAnim(true);
@@ -61,8 +78,7 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
     }
 
-    public void FocusAnim(bool active)
-    {
+    public void FocusAnim(bool active) {
         _hoverFlag = active;
         _focus.gameObject.SetActive(active);
         if (active) {
@@ -73,31 +89,26 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         
     }
 
-    public void AddBrother(PieceController brother)
-    {
+    public void AddBrother(PieceController brother) {
         if (!Brothers.Contains(brother)) {
             Brothers.Add(brother);
         }
     }
 
-    private IEnumerator FocusAnimation()
-    {
-        while (_hoverFlag)
-        {
+    private IEnumerator FocusAnimation() {
+        while (_hoverFlag) {
             yield return StartCoroutine(ScaleTo(_focus.rectTransform, 1.25f, 0.5f));
             yield return StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0.5f));
             yield return new WaitForSeconds(0);
         }
     }
 
-    private IEnumerator ScaleTo(RectTransform rect, float target, float duration)
-    {
+    private IEnumerator ScaleTo(RectTransform rect, float target, float duration) {
         Vector3 startScale = rect.localScale;
         Vector3 endScale = new Vector3(1,1,1) * target;
         float elapsed = 0f;
 
-        while (elapsed < duration)
-        {
+        while (elapsed < duration) {
             elapsed += Time.deltaTime;
             rect.localScale = Vector3.Lerp(startScale, endScale, elapsed / duration);
             yield return null;
