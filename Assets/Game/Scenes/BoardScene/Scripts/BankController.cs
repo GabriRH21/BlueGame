@@ -23,6 +23,37 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _backButton.gameObject.SetActive(false);
     }
 
+    public bool Has(List<PieceController> listToCheck) {
+        bool check = false;
+        foreach (PieceController piece in listToCheck) {
+            foreach(PieceController OwnPieces in pieces) {
+                if (piece == OwnPieces) {
+                    check = true;
+                }
+            }
+            if (!check) {
+                return false;
+            }
+            check = false;
+        }
+        return true;
+    }
+
+    public void RemovePiece(PieceController piece) {
+        if (piece == null) {
+            Debug.LogError("Method: RemovePiece in BankController. Piece is NULL");
+            return;
+        }
+
+        if (!pieces.Contains(piece)) {
+            Debug.LogError("Method: RemovePiece in BankController. Piece is not in this bank");
+            return;
+        }
+
+        pieces.Remove(piece);
+        Destroy(piece.gameObject);
+    }
+
     public void OnPointerEnter(PointerEventData p)
     {
         if (!_bankSelected) {
@@ -101,6 +132,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 if (activate) {
                     pieces.Add(piece);
                     piece.TurnOn();
+                    piece.AddBank(this);
                     SetBrothers(piece);
                 } else {
                     piece.turnOff();

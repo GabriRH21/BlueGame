@@ -8,14 +8,13 @@ public class BoardSceneManager : MonoBehaviour
     [SerializeField] private GameObject _centerPiecePrefab;
     [SerializeField] private RectTransform[] _banks;
 
-    private void Awake()
-    {
+    private void Awake() {
+        BoardEventManager.PieceChoosenFromBank += PieceChoosenFromBank;
         FillBanks();
         
     }
 
-    private void FillBanks()
-    {
+    private void FillBanks() {
         float radius = 25f;
         foreach (var bank in _banks) {
             for (int i = 0; i < 4; i++) {
@@ -33,5 +32,19 @@ public class BoardSceneManager : MonoBehaviour
                 rt.localRotation = Quaternion.Euler(0, 0, Random.Range(-25f, 25f));
             }
         }
+    }
+
+    private void PieceChoosenFromBank(PieceController piece, BankController bank) {
+        List<PieceController> allBrothers = piece.GetBrothers();
+        allBrothers.Add(piece);
+        if (!bank.Has(allBrothers)) {
+            Debug.LogError("Las piezas Seleccionadas no pertenecen al banco seleccionado");
+            return;
+        }
+        // ToDo: Add Pieces To player, Allowing him to put whereever he wants
+        foreach (var pieceToTake in allBrothers) {
+            bank.RemovePiece(pieceToTake);
+        }
+        
     }
 }

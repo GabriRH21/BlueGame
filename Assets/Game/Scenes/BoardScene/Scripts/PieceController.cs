@@ -13,6 +13,7 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Color32 color;
     private bool _hoverFlag = false;
     private List<PieceController> Brothers = new List<PieceController>();
+    private BankController _bank;
 
     private void Awake() {
         SelectType();
@@ -36,7 +37,7 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     private void OnButtonClick() {
-        
+        BoardEventManager.PieceChoosenFromBank?.Invoke(this, _bank);
     }
 
     private void SelectType() {
@@ -93,6 +94,14 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (!Brothers.Contains(brother)) {
             Brothers.Add(brother);
         }
+    }
+
+    public void AddBank(BankController father) {
+        _bank = father;
+    }
+
+    public List<PieceController> GetBrothers() {
+        return Brothers;
     }
 
     private IEnumerator FocusAnimation() {
