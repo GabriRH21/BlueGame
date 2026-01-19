@@ -47,7 +47,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         return true;
     }
 
-    public void AddPiece(PieceController piece) {
+    public virtual void AddPiece(PieceController piece) {
         if (pieces.Contains(piece)) {
             Debug.LogWarning("repeated piece");
             return;

@@ -3,12 +3,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     [SerializeField] private Button _button;
     [SerializeField] private Image _focus;
+    [SerializeField] private TextMeshProUGUI _quantity;
     public PieceType pieceType;
     private Color32 color;
     private bool _hoverFlag = false;
@@ -22,6 +24,7 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         _focus.gameObject.SetActive(false);
         _button.onClick.AddListener(OnButtonClick);
         _button.enabled = false;
+        _quantity.gameObject.SetActive(false);
 
         this.enabled = false;
     }
@@ -34,6 +37,18 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void turnOff() {
         _button.enabled = false;
         this.enabled = false;
+    }
+
+    public void TurnQuantityOn(bool turnOn) {
+        _quantity.gameObject.SetActive(turnOn);
+    }
+
+    public void UpdateQuantity(int newVal) {
+        _quantity.text = newVal.ToString();
+    }
+
+    public PieceType GetPieceType() {
+        return pieceType;
     }
 
     private void OnButtonClick() {

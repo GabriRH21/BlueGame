@@ -54,7 +54,7 @@ public class BoardSceneManager : MonoBehaviour
         List<PieceController> pieces = bank.GetPieces();
         float radius = 25f;
 
-        BankController centerBank = _center.GetComponent<BankController>();
+        BankController centerBank = _center.GetComponent<CenterBankController>();
 
         foreach (var piece in pieces)
         {
