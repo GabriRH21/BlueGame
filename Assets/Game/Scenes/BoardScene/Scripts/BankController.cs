@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image _focus;
-    [SerializeField] private Button _button;
-    [SerializeField] private UIZoomManager _zoomManager;
-    [SerializeField] private Button _backButton;
+    [SerializeField] protected Image _focus;
+    [SerializeField] protected Button _button;
+    [SerializeField] protected UIZoomManager _zoomManager;
+    [SerializeField] protected Button _backButton;
 
-    private List<PieceController> pieces = new List<PieceController>();
+    protected List<PieceController> pieces = new List<PieceController>();
 
-    private bool _hoverFlag = false;
-    private bool _bankSelected = false;
+    protected bool _hoverFlag = false;
+    protected bool _bankSelected = false;
 
     protected virtual void Awake()
     {
@@ -80,7 +80,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    private IEnumerator FocusAnimation()
+    protected IEnumerator FocusAnimation()
     {
         while (_hoverFlag)
         {
@@ -90,7 +90,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    private IEnumerator ScaleTo(RectTransform rect, float target, float duration)
+    protected IEnumerator ScaleTo(RectTransform rect, float target, float duration)
     {
         Vector3 startScale = rect.localScale;
         Vector3 endScale = new Vector3(1,1,1) * target;
@@ -113,7 +113,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         _focus.gameObject.SetActive(false);   
     }
 
-    private void SelectThisBank()
+    protected void SelectThisBank()
     {
         _button.enabled = false;
         _bankSelected = true;
@@ -128,7 +128,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         ActivatePieces(true);
     }
 
-    private void OnBackButtonPressed()
+    protected void OnBackButtonPressed()
     {
         _bankSelected = false;
         _zoomManager.ResetZoom(GetComponent<RectTransform>());
@@ -138,7 +138,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         ActivatePieces(false);
     }
 
-    private void ActivatePieces(bool activate)
+    protected void ActivatePieces(bool activate)
     {
         for (int i = 0; i < transform.childCount; i++) {
             Transform child = transform.GetChild(i);
@@ -162,7 +162,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    private void SetBrothers(PieceController newPiece)
+    protected void SetBrothers(PieceController newPiece)
     {
         foreach (var piece in pieces) {
             if (piece.pieceType == newPiece.pieceType && piece != newPiece) {
