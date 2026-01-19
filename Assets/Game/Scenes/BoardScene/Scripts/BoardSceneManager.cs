@@ -7,6 +7,7 @@ public class BoardSceneManager : MonoBehaviour
     [Header("CenterStuff")]
     [SerializeField] private GameObject _centerPiecePrefab;
     [SerializeField] private RectTransform[] _banks;
+    [SerializeField] private RectTransform _center;
 
     private void Awake() {
         BoardEventManager.PieceChoosenFromBank += PieceChoosenFromBank;
@@ -45,6 +46,34 @@ public class BoardSceneManager : MonoBehaviour
         foreach (var pieceToTake in allBrothers) {
             bank.RemovePiece(pieceToTake);
         }
-        
+
+        CleanBank(bank);
+    }
+
+    private void CleanBank(BankController bank) {
+        List<PieceController> pieces = bank.GetPieces();
+        float radius = 25f;
+
+        BankController centerBank = _center.GetComponent<BankController>();
+
+        foreach (var piece in pieces)
+        {
+            RectTransform rt = piece.GetComponent<RectTransform>();
+
+            rt.SetParent(_center, worldPositionStays: false);
+
+            float angle = (360f / 4) * centerBank.GetPieces().Count + Random.Range(-10f, 10f);
+            Vector2 pos = new Vector2(
+                Mathf.Cos(angle * Mathf.Deg2Rad),
+                Mathf.Sin(angle * Mathf.Deg2Rad)
+            ) * radius;
+
+            rt.anchoredPosition = pos;
+            rt.localRotation = Quaternion.Euler(0, 0, Random.Range(-25f, 25f));
+
+            centerBank.AddPiece(piece);
+        }
+
+        bank.Clear();
     }
 }

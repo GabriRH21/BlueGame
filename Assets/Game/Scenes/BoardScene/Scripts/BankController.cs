@@ -16,11 +16,19 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private bool _hoverFlag = false;
     private bool _bankSelected = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _button.onClick.AddListener(SelectThisBank);
         _focus.gameObject.SetActive(false);
         _backButton.gameObject.SetActive(false);
+    }
+
+    public List<PieceController> GetPieces() {
+        return pieces;
+    }
+
+    public void Clear() {
+        pieces.Clear();
     }
 
     public bool Has(List<PieceController> listToCheck) {
@@ -37,6 +45,15 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             check = false;
         }
         return true;
+    }
+
+    public void AddPiece(PieceController piece) {
+        if (pieces.Contains(piece)) {
+            Debug.LogWarning("repeated piece");
+            return;
+        }
+
+        pieces.Add(piece);
     }
 
     public void RemovePiece(PieceController piece) {
