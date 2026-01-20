@@ -8,6 +8,9 @@ public class BoardSceneManager : MonoBehaviour
     [SerializeField] private GameObject _centerPiecePrefab;
     [SerializeField] private RectTransform[] _banks;
     [SerializeField] private RectTransform _center;
+    [Space]
+    [Header("PlayerBoardStuff")]
+    [SerializeField] private RectTransform _playerBoard;
 
     private void Awake() {
         BoardEventManager.PieceChoosenFromBank += PieceChoosenFromBank;

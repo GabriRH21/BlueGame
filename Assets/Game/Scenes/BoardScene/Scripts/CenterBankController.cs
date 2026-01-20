@@ -19,7 +19,6 @@ public class CenterBankController : BankController
 
         PieceController sameTypePiece = null;
 
-        // 1️⃣ Buscar pieza del mismo tipo
         foreach (var piece in pieces) {
             if (piece.GetPieceType() == newPiece.GetPieceType()) {
                 sameTypePiece = piece;
@@ -27,11 +26,9 @@ public class CenterBankController : BankController
             }
         }
 
-        // 2️⃣ Si existe, actualizar cantidad y destruir la nueva
         if (sameTypePiece != null) {
             int index = (int)sameTypePiece.GetPieceType();
 
-            Debug.Log("cantidad: " + quantities[index]);
             if (quantities[index] == 0  || pieces.Count == 1) {
                 sameTypePiece.TurnQuantityOn(true);
             }
@@ -40,14 +37,11 @@ public class CenterBankController : BankController
             sameTypePiece.UpdateQuantity(quantities[index]);
 
             Destroy(newPiece.gameObject);
-        }
-        // 3️⃣ Si no existe, añadir la nueva
-        else {
+        } else {
             pieces.Add(newPiece);
             quantities[(int)newPiece.GetPieceType()]++;
         }
 
-        // 4️⃣ Activar centro si hace falta
         if (!centerIsActive) {
             EnableCenter();
             centerIsActive = true;
