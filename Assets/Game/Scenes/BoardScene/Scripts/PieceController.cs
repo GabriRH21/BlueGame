@@ -51,6 +51,10 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
         return pieceType;
     }
 
+    public Color32 GetColor32() {
+        return color;
+    }
+
     private void OnButtonClick() {
         BoardEventManager.PieceChoosenFromBank?.Invoke(this, _bank);
     }

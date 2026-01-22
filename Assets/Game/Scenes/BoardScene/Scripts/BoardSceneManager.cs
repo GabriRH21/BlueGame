@@ -11,6 +11,9 @@ public class BoardSceneManager : MonoBehaviour
     [Space]
     [Header("PlayerBoardStuff")]
     [SerializeField] private RectTransform _playerBoard;
+    [Space]
+    [Header("UI")]
+    [SerializeField] private UICanvasController _uiCanvas;
 
     private void Awake() {
         BoardEventManager.PieceChoosenFromBank += PieceChoosenFromBank;
