@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoardSceneManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class BoardSceneManager : MonoBehaviour
     [Space]
     [Header("UI")]
     [SerializeField] private UICanvasController _uiCanvas;
+    [SerializeField] private Button _backZoomButton;
+    [SerializeField] private UIZoomManager _uiZoomManager;
 
     private void Awake() {
         BoardEventManager.PieceChoosenFromBank += PieceChoosenFromBank;
@@ -44,16 +47,23 @@ public class BoardSceneManager : MonoBehaviour
     private void PieceChoosenFromBank(PieceController piece, BankController bank) {
         List<PieceController> allBrothers = piece.GetBrothers();
         allBrothers.Add(piece);
+        BankZoomOut(bank);
         if (!bank.Has(allBrothers)) {
             Debug.LogError("Las piezas Seleccionadas no pertenecen al banco seleccionado");
             return;
         }
+        _uiCanvas.ShowPieces(allBrothers.Count, piece);
         // ToDo: Add Pieces To player, Allowing him to put whereever he wants
         foreach (var pieceToTake in allBrothers) {
             bank.RemovePiece(pieceToTake);
         }
 
         CleanBank(bank);
+    }
+
+    private void BankZoomOut(BankController bank){
+        _uiZoomManager.ResetZoom(bank.gameObject.GetComponent<RectTransform>());
+        _backZoomButton.gameObject.SetActive(false);
     }
 
     private void CleanBank(BankController bank) {
