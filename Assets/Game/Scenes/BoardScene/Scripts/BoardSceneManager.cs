@@ -56,6 +56,7 @@ public class BoardSceneManager : MonoBehaviour
         _uiCanvas.ShowPieces(allBrothers.Count, piece);
         // ToDo: Add Pieces To player, Allowing him to put whereever he wants
         foreach (var pieceToTake in allBrothers) {
+            Globals.PlayerStats.PiecesInHand.Add(pieceToTake);
             bank.RemovePiece(pieceToTake);
         }
 
@@ -95,6 +96,7 @@ public class BoardSceneManager : MonoBehaviour
     }
 
     private void BankSelected(BankController actualBank) {
+        if (Globals.PlayerStats.PiecesInHand.Count > 0) return;
 
         foreach(var bank in _banks) {
 
