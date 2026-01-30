@@ -10,6 +10,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] protected Button _button;
     [SerializeField] protected UIZoomManager _zoomManager;
     [SerializeField] protected Button _backButton;
+    protected bool selected = false; 
 
     protected List<PieceController> pieces = new List<PieceController>();
 
@@ -25,6 +26,10 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public List<PieceController> GetPieces() {
         return pieces;
+    }
+
+    public bool IsBankSelected() {
+        return _bankSelected;
     }
 
     public void Clear() {
@@ -96,8 +101,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Vector3 endScale = new Vector3(1,1,1) * target;
         float elapsed = 0f;
 
-        while (elapsed < duration)
-        {
+        while (elapsed < duration) {
             elapsed += Time.deltaTime;
             rect.localScale = Vector3.Lerp(startScale, endScale, elapsed / duration);
             yield return null;
@@ -106,15 +110,17 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         rect.localScale = endScale; 
     }
 
-    public void OnPointerExit(PointerEventData p)
-    {
+    public void OnPointerExit(PointerEventData p) {
         _hoverFlag = false;
         StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0f));
         _focus.gameObject.SetActive(false);   
     }
 
-    protected void SelectThisBank()
-    {
+    protected void SelectThisBank() {
+        BoardEventManager.BankSelected?.Invoke(this);
+    }
+
+    public void ConfirmSelection() {
         _button.enabled = false;
         _bankSelected = true;
         

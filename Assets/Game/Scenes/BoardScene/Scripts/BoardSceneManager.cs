@@ -20,6 +20,7 @@ public class BoardSceneManager : MonoBehaviour
 
     private void Awake() {
         BoardEventManager.PieceChoosenFromBank += PieceChoosenFromBank;
+        BoardEventManager.BankSelected += BankSelected;
         FillBanks();
         
     }
@@ -43,7 +44,7 @@ public class BoardSceneManager : MonoBehaviour
             }
         }
     }
-
+#region Events
     private void PieceChoosenFromBank(PieceController piece, BankController bank) {
         List<PieceController> allBrothers = piece.GetBrothers();
         allBrothers.Add(piece);
@@ -92,4 +93,17 @@ public class BoardSceneManager : MonoBehaviour
 
         bank.Clear();
     }
+
+    private void BankSelected(BankController actualBank) {
+
+        foreach(var bank in _banks) {
+
+            if (bank.GetComponent<BankController>().IsBankSelected()) {
+                return;
+            }
+        }
+
+        actualBank.ConfirmSelection();
+    }
+#endregion
 }
