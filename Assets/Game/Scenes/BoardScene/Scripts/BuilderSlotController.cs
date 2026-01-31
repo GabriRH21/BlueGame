@@ -5,19 +5,56 @@ using UnityEngine.UI;
 
 public class BuilderSlotController : MonoBehaviour
 {
-    private PieceController _piece;
     [SerializeField] private Button _button;
-    [SerializeField] private BuilderSlotController[] _slots;
+    [SerializeField] private SlotController[] _slots;
 
     private void Awake() {
         _button.onClick.AddListener(SlotSelected);
     }
 
     private void SlotSelected() {
-        if (Globals.PlayerStats.PiecesInHand.Count == 0) {
+        int numberOfPieces = Globals.PlayerStats.PiecesInHand.Count;
+        if (numberOfPieces == 0) {
             return;
         }
-
         
+        if (IsBuildingAllRow()) {
+            return;
+        }
+        
+        PieceController piece = Globals.PlayerStats.PiecesInHand[0];
+        if (!AreBuildingThisPiece(piece)) {
+            return;
+        }
+        
+        foreach (var slot in _slots) {
+            if (!slot.IsBuilding()) {
+                slot.Build(piece);
+
+            }
+        }
+    }
+
+    private bool IsBuildingAllRow() {
+        int acc = 0;
+        foreach (SlotController slot in _slots) {
+            if (slot.IsBuilding()) {
+                acc++;
+            }
+        }
+        
+        return acc == _slots.Length;
+    }
+
+    private bool AreBuildingThisPiece(PieceController piece) {
+        foreach (SlotController slot in _slots) {
+            if (slot.IsBuilding(piece.GetPieceType())) {
+                return true;
+            }
+            if (slot.IsBuilding()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

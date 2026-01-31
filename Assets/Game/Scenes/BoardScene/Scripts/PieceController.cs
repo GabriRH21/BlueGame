@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 
 public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -61,7 +62,7 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void SelectType() {
         PieceType[] values = (PieceType[]) System.Enum.GetValues(typeof(PieceType));
-        pieceType = values[Random.Range(0, values.Length)];
+        pieceType = values[Random.Range(1, values.Length)];
 
         switch (pieceType) {
             case PieceType.Red:
@@ -76,8 +77,11 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
             case PieceType.Blue:
                 color = new Color32(30, 144, 255, 255);
                 break;
-            default:
+            case PieceType.Yellow:
                 color = new Color32(231, 242, 0, 255);
+                break;
+            default:
+                Debug.LogError("Error Trying to initialice Pieces. No Type Found");
                 break;
         }
         this.gameObject.GetComponent<Image>().color = color;

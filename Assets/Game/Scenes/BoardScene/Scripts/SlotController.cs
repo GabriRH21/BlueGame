@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlotController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private PieceController _piece;
+    private PieceType _pieceToBuild = PieceType.None;
+    private Image _myImage;
+
+    private void Awake() {
+        _myImage = GetComponent<Image>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+#region Getters
+    public bool IsBuilding() {
+        return _pieceToBuild != PieceType.None;
     }
+
+    public bool IsBuilding(PieceType type) {
+        return _pieceToBuild == type;
+    }
+#endregion Getters
+
+#region Setters
+    public void Build(PieceController piece) {
+        _piece = piece;
+        _pieceToBuild = piece.GetPieceType();
+        _myImage.color = piece.GetColor32();
+    }
+#endregion Setters
+
 }

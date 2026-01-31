@@ -27,7 +27,7 @@ public class CenterBankController : BankController
         }
 
         if (sameTypePiece != null) {
-            int index = (int)sameTypePiece.GetPieceType();
+            int index = (int)sameTypePiece.GetPieceType() - 1;
 
             if (quantities[index] == 0  || pieces.Count == 1) {
                 sameTypePiece.TurnQuantityOn(true);
@@ -39,7 +39,7 @@ public class CenterBankController : BankController
             Destroy(newPiece.gameObject);
         } else {
             pieces.Add(newPiece);
-            quantities[(int)newPiece.GetPieceType()]++;
+            quantities[(int)newPiece.GetPieceType() - 1]++;
         }
 
         if (!centerIsActive) {
