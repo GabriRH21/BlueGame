@@ -42,6 +42,7 @@ public class BuilderSlotController : MonoBehaviour
 
     private void PlacePieces(PieceController piece, int numberOfPieces) {
         int places = System.Math.Min(numberOfPieces, FreeSlots());
+        int restPieces = numberOfPieces - places;
         int index = 0;
         try {
             do {
@@ -57,6 +58,10 @@ public class BuilderSlotController : MonoBehaviour
 
         Globals.PlayerStats.PiecesInHand = new List<PieceController>();
         BoardEventManager.UpdatePiecesCounter?.Invoke(0, null);
+        restPieces += places;
+        if (restPieces > 0) {
+            BoardEventManager.AddPenalty?.Invoke(restPieces, piece);
+        }
     }
 
     private bool IsBuildingAllRow() {
