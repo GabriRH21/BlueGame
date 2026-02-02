@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class BoardEventManager
 {
+    public static System.Action<int, PieceController> UpdatePiecesCounter;
     public static System.Action<PieceController, BankController> PieceChoosenFromBank;
     public static System.Action<BankController> BankSelected;
 }

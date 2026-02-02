@@ -27,12 +27,36 @@ public class BuilderSlotController : MonoBehaviour
             return;
         }
         
-        foreach (var slot in _slots) {
-            if (!slot.IsBuilding()) {
-                slot.Build(piece);
+        PlacePieces(piece, numberOfPieces);
+    }
 
+    private int FreeSlots() {
+        int acc = 0;
+        foreach (SlotController slot in _slots) {
+            if (!slot.IsBuilding()) {
+                acc++;
             }
         }
+        return acc;
+    }
+
+    private void PlacePieces(PieceController piece, int numberOfPieces) {
+        int places = System.Math.Min(numberOfPieces, FreeSlots());
+        int index = 0;
+        try {
+            do {
+                if (!_slots[index].IsBuilding()) {
+                    _slots[index].Build(piece);
+                    places--;
+                }
+                index++;
+            } while(places != 0 && index < _slots.Length);
+        } catch (System.Exception e) {
+            Debug.LogError("Error: FreeSlots is not calculating well. Error: " + e.Message);
+        }
+
+        Globals.PlayerStats.PiecesInHand = new List<PieceController>();
+        BoardEventManager.UpdatePiecesCounter?.Invoke(0, null);
     }
 
     private bool IsBuildingAllRow() {

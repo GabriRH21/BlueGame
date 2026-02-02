@@ -13,7 +13,17 @@ public class UICanvasController : MonoBehaviour
     // ToDo: [SerializeField] private Sprite[] _pieceSprite
 
     private void Awake() {
+        BoardEventManager.UpdatePiecesCounter += UpdatePiecesCounter;
         _piecesImage.gameObject.SetActive(false);
+    }
+
+    
+    private void UpdatePiecesCounter(int quantity, PieceController piece = null) {
+        if (quantity == 0 || piece == null) {
+            HidePieces();
+            return;
+        }
+        ShowPieces(quantity, piece);
     }
 
     public void ShowPieces(int number, PieceController piece) {

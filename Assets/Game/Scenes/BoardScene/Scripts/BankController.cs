@@ -62,6 +62,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
 
     public void RemovePiece(PieceController piece) {
+        _bankSelected = false;
         if (piece == null) {
             Debug.LogError("Method: RemovePiece in BankController. Piece is NULL");
             return;
