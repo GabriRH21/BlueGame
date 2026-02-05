@@ -178,4 +178,10 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             }
         }
     }
+
+#region CenterMethods
+    public virtual int GetQuantities(PieceController piece) {
+        throw new System.NotImplementedException("GetQuantities must be overridden in derived classes");
+    }
+#endregion
 }

@@ -11,6 +11,10 @@ public class CenterBankController : BankController
         _button.enabled = false;
     }
 
+    public override int GetQuantities(PieceController piece) {
+        return quantities[(int)piece.GetPieceType()];
+    } 
+
     public override void AddPiece(PieceController newPiece) {
         if (pieces.Contains(newPiece)) {
             Debug.LogWarning("repeated piece in Center");

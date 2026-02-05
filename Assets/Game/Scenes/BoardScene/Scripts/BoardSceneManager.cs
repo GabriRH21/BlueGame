@@ -46,21 +46,32 @@ public class BoardSceneManager : MonoBehaviour
     }
 #region Events
     private void PieceChoosenFromBank(PieceController piece, BankController bank) {
-        List<PieceController> allBrothers = piece.GetBrothers();
-        allBrothers.Add(piece);
         BankZoomOut(bank);
-        if (!bank.Has(allBrothers)) {
-            Debug.LogError("Las piezas Seleccionadas no pertenecen al banco seleccionado");
-            return;
-        }
-        _uiCanvas.ShowPieces(allBrothers.Count, piece);
-        // ToDo: Add Pieces To player, Allowing him to put whereever he wants
-        foreach (var pieceToTake in allBrothers) {
-            Globals.PlayerStats.PiecesInHand.Add(pieceToTake);
-            bank.RemovePiece(pieceToTake);
-        }
+        
+        if (bank == _center.GetComponent<CenterBankController>()) {
+            Debug.Log("hola");
+            _uiCanvas.ShowPieces(bank.GetQuantities(piece), piece);
+            for (int i = 0; i < bank.GetQuantities(piece); i++) {
+                Globals.PlayerStats.PiecesInHand.Add(piece);
+            }
+            bank.RemovePiece(piece);
+        } else {
+            List<PieceController> allBrothers = piece.GetBrothers();
+            allBrothers.Add(piece);
+            
+            if (!bank.Has(allBrothers)) {
+                Debug.LogError("Las piezas Seleccionadas no pertenecen al banco seleccionado");
+                return;
+            }
+            _uiCanvas.ShowPieces(allBrothers.Count, piece);
+            // ToDo: Add Pieces To player, Allowing him to put whereever he wants
+            foreach (var pieceToTake in allBrothers) {
+                Globals.PlayerStats.PiecesInHand.Add(pieceToTake);
+                bank.RemovePiece(pieceToTake);
+            }
 
-        CleanBank(bank);
+            CleanBank(bank);
+        }
     }
 
     private void BankZoomOut(BankController bank){
@@ -73,26 +84,30 @@ public class BoardSceneManager : MonoBehaviour
         float radius = 25f;
 
         BankController centerBank = _center.GetComponent<CenterBankController>();
+        if (bank != centerBank) {
+            foreach (var piece in pieces) {
+                RectTransform rt = piece.GetComponent<RectTransform>();
 
-        foreach (var piece in pieces)
-        {
-            RectTransform rt = piece.GetComponent<RectTransform>();
+                rt.SetParent(_center, worldPositionStays: false);
 
-            rt.SetParent(_center, worldPositionStays: false);
+                float angle = (360f / 4) * centerBank.GetPieces().Count + Random.Range(-10f, 10f);
+                Vector2 pos = new Vector2(
+                    Mathf.Cos(angle * Mathf.Deg2Rad),
+                    Mathf.Sin(angle * Mathf.Deg2Rad)
+                ) * radius;
 
-            float angle = (360f / 4) * centerBank.GetPieces().Count + Random.Range(-10f, 10f);
-            Vector2 pos = new Vector2(
-                Mathf.Cos(angle * Mathf.Deg2Rad),
-                Mathf.Sin(angle * Mathf.Deg2Rad)
-            ) * radius;
+                rt.anchoredPosition = pos;
+                rt.localRotation = Quaternion.Euler(0, 0, Random.Range(-25f, 25f));
 
-            rt.anchoredPosition = pos;
-            rt.localRotation = Quaternion.Euler(0, 0, Random.Range(-25f, 25f));
+                centerBank.AddPiece(piece);
+            }
 
-            centerBank.AddPiece(piece);
+            bank.Clear();
+        } else {
+            //ToDo: remove the piece i took
         }
 
-        bank.Clear();
+        
     }
 
     private void BankSelected(BankController actualBank) {
