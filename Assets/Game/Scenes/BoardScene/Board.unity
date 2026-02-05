@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 70269001}
   - component: {fileID: 70269003}
   - component: {fileID: 70269002}
+  - component: {fileID: 70269004}
   m_Layer: 5
   m_Name: nerfs (3)
   m_TagString: Untagged
@@ -197,6 +198,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70269000}
   m_CullTransparentMesh: 1
+--- !u!114 &70269004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70269000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a739f3d33845934a944ce50a0b9e8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myImage: {fileID: 70269002}
+  _penalty: 2
 --- !u!1 &70601839
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +461,7 @@ GameObject:
   - component: {fileID: 194827016}
   - component: {fileID: 194827018}
   - component: {fileID: 194827017}
+  - component: {fileID: 194827019}
   m_Layer: 5
   m_Name: nerfs (4)
   m_TagString: Untagged
@@ -510,6 +526,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194827015}
   m_CullTransparentMesh: 1
+--- !u!114 &194827019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194827015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a739f3d33845934a944ce50a0b9e8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myImage: {fileID: 194827017}
+  _penalty: 2
 --- !u!1 &207274826
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +551,7 @@ GameObject:
   - component: {fileID: 207274827}
   - component: {fileID: 207274829}
   - component: {fileID: 207274828}
+  - component: {fileID: 207274830}
   m_Layer: 5
   m_Name: nerfs (2)
   m_TagString: Untagged
@@ -585,6 +616,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207274826}
   m_CullTransparentMesh: 1
+--- !u!114 &207274830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207274826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a739f3d33845934a944ce50a0b9e8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myImage: {fileID: 207274828}
+  _penalty: 2
 --- !u!1 &222532892
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +641,7 @@ GameObject:
   - component: {fileID: 222532893}
   - component: {fileID: 222532895}
   - component: {fileID: 222532894}
+  - component: {fileID: 222532896}
   m_Layer: 5
   m_Name: nerfs
   m_TagString: Untagged
@@ -660,6 +706,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222532892}
   m_CullTransparentMesh: 1
+--- !u!114 &222532896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222532892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a739f3d33845934a944ce50a0b9e8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myImage: {fileID: 222532894}
+  _penalty: 1
 --- !u!1 &245223774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,6 +1657,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab3fd42b0ad29824abb22364d2843df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _penaltySlots:
+  - {fileID: 222532896}
+  - {fileID: 1613391609}
+  - {fileID: 207274830}
+  - {fileID: 70269004}
+  - {fileID: 194827019}
+  - {fileID: 777537696}
+  - {fileID: 1600839953}
 --- !u!1 &376566122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,6 +2587,7 @@ GameObject:
   - component: {fileID: 777537693}
   - component: {fileID: 777537695}
   - component: {fileID: 777537694}
+  - component: {fileID: 777537696}
   m_Layer: 5
   m_Name: nerfs (5)
   m_TagString: Untagged
@@ -2583,6 +2652,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777537692}
   m_CullTransparentMesh: 1
+--- !u!114 &777537696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777537692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a739f3d33845934a944ce50a0b9e8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myImage: {fileID: 777537694}
+  _penalty: 3
 --- !u!1 &783715535
 GameObject:
   m_ObjectHideFlags: 0
@@ -4787,6 +4870,7 @@ GameObject:
   - component: {fileID: 1600839950}
   - component: {fileID: 1600839952}
   - component: {fileID: 1600839951}
+  - component: {fileID: 1600839953}
   m_Layer: 5
   m_Name: nerfs (6)
   m_TagString: Untagged
@@ -4851,6 +4935,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1600839949}
   m_CullTransparentMesh: 1
+--- !u!114 &1600839953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600839949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a739f3d33845934a944ce50a0b9e8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myImage: {fileID: 1600839951}
+  _penalty: 3
 --- !u!1 &1613391605
 GameObject:
   m_ObjectHideFlags: 0
@@ -4862,6 +4960,7 @@ GameObject:
   - component: {fileID: 1613391606}
   - component: {fileID: 1613391608}
   - component: {fileID: 1613391607}
+  - component: {fileID: 1613391609}
   m_Layer: 5
   m_Name: nerfs (1)
   m_TagString: Untagged
@@ -4926,6 +5025,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1613391605}
   m_CullTransparentMesh: 1
+--- !u!114 &1613391609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613391605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a739f3d33845934a944ce50a0b9e8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myImage: {fileID: 1613391607}
+  _penalty: 1
 --- !u!1 &1615712447
 GameObject:
   m_ObjectHideFlags: 0

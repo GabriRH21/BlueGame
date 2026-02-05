@@ -45,6 +45,9 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void UpdateQuantity(int newVal) {
+        if (!_quantity.enabled) {
+            _quantity.enabled = true;
+        }
         _quantity.text = newVal.ToString();
     }
 

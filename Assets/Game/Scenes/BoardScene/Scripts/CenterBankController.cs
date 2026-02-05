@@ -34,6 +34,7 @@ public class CenterBankController : BankController
             }
 
             quantities[index]++;
+            Debug.Log(quantities[index]);
             sameTypePiece.UpdateQuantity(quantities[index]);
 
             Destroy(newPiece.gameObject);
