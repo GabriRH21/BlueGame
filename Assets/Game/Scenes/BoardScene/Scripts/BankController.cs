@@ -77,6 +77,10 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Destroy(piece.gameObject);
     }
 
+    public void Disable() {
+        _button.enabled = false;
+    }
+
     public void OnPointerEnter(PointerEventData p)
     {
         if (!_bankSelected) {
@@ -135,8 +139,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         ActivatePieces(true);
     }
 
-    protected void OnBackButtonPressed()
-    {
+    protected void OnBackButtonPressed() {
         _bankSelected = false;
         _zoomManager.ResetZoom(GetComponent<RectTransform>());
         _button.enabled = true;
@@ -145,8 +148,7 @@ public class BankController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         ActivatePieces(false);
     }
 
-    protected void ActivatePieces(bool activate)
-    {
+    protected void ActivatePieces(bool activate)  {
         for (int i = 0; i < transform.childCount; i++) {
             Transform child = transform.GetChild(i);
             if (child.gameObject.GetComponent<PieceController>() != null) {

@@ -10,4 +10,6 @@ public static class BoardEventManager
 
     public static System.Action<int, PieceController> AddPenalty;
     public static System.Action AddCenterPenalty;
+
+    public static System.Action EndPlayerTurn;
 }

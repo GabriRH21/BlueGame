@@ -21,6 +21,7 @@ public class BoardSceneManager : MonoBehaviour
     private void Awake() {
         BoardEventManager.PieceChoosenFromBank += PieceChoosenFromBank;
         BoardEventManager.BankSelected += BankSelected;
+        BoardEventManager.EndPlayerTurn += EndPlayerTurn;
         FillBanks();
         
     }
@@ -45,6 +46,12 @@ public class BoardSceneManager : MonoBehaviour
         }
     }
 #region Events
+    private void EndPlayerTurn() {
+        foreach (var bank in _banks) {
+            bank.GetComponent<BankController>().Disable();
+        }
+    }
+
     private void PieceChoosenFromBank(PieceController piece, BankController bank) {
         BankZoomOut(bank);
         

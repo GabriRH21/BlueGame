@@ -62,6 +62,7 @@ public class BuilderSlotController : MonoBehaviour
         if (restPieces > 0) {
             BoardEventManager.AddPenalty?.Invoke(restPieces, piece);
         }
+        BoardEventManager.EndPlayerTurn?.Invoke();
     }
 
     private bool IsBuildingAllRow() {
