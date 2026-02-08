@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myImage: {fileID: 70269002}
+  _defaultPenalty: {fileID: 21300000, guid: ef2ffd693ab5a30498ec51871b9b821d, type: 3}
   _penalty: 2
 --- !u!1 &70601839
 GameObject:
@@ -539,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myImage: {fileID: 194827017}
+  _defaultPenalty: {fileID: 21300000, guid: ef2ffd693ab5a30498ec51871b9b821d, type: 3}
   _penalty: 2
 --- !u!1 &207274826
 GameObject:
@@ -629,6 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myImage: {fileID: 207274828}
+  _defaultPenalty: {fileID: 21300000, guid: ef2ffd693ab5a30498ec51871b9b821d, type: 3}
   _penalty: 2
 --- !u!1 &222532892
 GameObject:
@@ -719,6 +722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myImage: {fileID: 222532894}
+  _defaultPenalty: {fileID: 21300000, guid: ef2ffd693ab5a30498ec51871b9b821d, type: 3}
   _penalty: 1
 --- !u!1 &245223774
 GameObject:
@@ -1604,7 +1608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -73}
+  m_AnchoredPosition: {x: 0, y: -73.503}
   m_SizeDelta: {x: 615.7268, y: 452.9949}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &371948852
@@ -2665,6 +2669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myImage: {fileID: 777537694}
+  _defaultPenalty: {fileID: 21300000, guid: ef2ffd693ab5a30498ec51871b9b821d, type: 3}
   _penalty: 3
 --- !u!1 &783715535
 GameObject:
@@ -4948,6 +4953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myImage: {fileID: 1600839951}
+  _defaultPenalty: {fileID: 21300000, guid: ef2ffd693ab5a30498ec51871b9b821d, type: 3}
   _penalty: 3
 --- !u!1 &1613391605
 GameObject:
@@ -5038,6 +5044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myImage: {fileID: 1613391607}
+  _defaultPenalty: {fileID: 21300000, guid: ef2ffd693ab5a30498ec51871b9b821d, type: 3}
   _penalty: 1
 --- !u!1 &1615712447
 GameObject:
@@ -5288,6 +5295,7 @@ MonoBehaviour:
   _button: {fileID: 1633195841}
   _zoomManager: {fileID: 1733866760}
   _backButton: {fileID: 280232649}
+  _firstPiece: {fileID: 1615712448}
 --- !u!1 &1663010412
 GameObject:
   m_ObjectHideFlags: 0

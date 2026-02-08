@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class CenterBankController : BankController
 {
+    [SerializeField] private RectTransform _firstPiece;
     private int[] quantities= {0, 0, 0, 0, 0};
     private bool centerIsActive = false;
+    private bool isFirstPiece = true;
+
     protected override void Awake() {
         base.Awake();
         _button.enabled = false;
     }
 
     public override int GetQuantities(PieceController piece) {
-        return quantities[(int)piece.GetPieceType()];
+        return quantities[(int)piece.GetPieceType() - 1];
     } 
+
+    public bool HasFirstPiece() {
+        return isFirstPiece;
+    }
+
+    public void RemoveFirstPiece() {
+        isFirstPiece = false;
+        Destroy(_firstPiece.gameObject);
+    }
 
     public override void AddPiece(PieceController newPiece) {
         if (pieces.Contains(newPiece)) {
@@ -53,7 +65,7 @@ public class CenterBankController : BankController
         }
     }
 
-    private void EnableCenter() {
+    public void EnableCenter() {
         _button.enabled = true;
         _focus.enabled = true;
     }

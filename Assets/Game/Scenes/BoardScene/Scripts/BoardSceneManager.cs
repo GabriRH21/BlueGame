@@ -48,13 +48,20 @@ public class BoardSceneManager : MonoBehaviour
     private void PieceChoosenFromBank(PieceController piece, BankController bank) {
         BankZoomOut(bank);
         
-        if (bank == _center.GetComponent<CenterBankController>()) {
-            Debug.Log("hola");
-            _uiCanvas.ShowPieces(bank.GetQuantities(piece), piece);
-            for (int i = 0; i < bank.GetQuantities(piece); i++) {
+        if (bank is CenterBankController) {
+            CenterBankController centerBank = bank as CenterBankController;
+            _uiCanvas.ShowPieces(centerBank.GetQuantities(piece), piece);
+            for (int i = 0; i < centerBank.GetQuantities(piece); i++) {
                 Globals.PlayerStats.PiecesInHand.Add(piece);
             }
-            bank.RemovePiece(piece);
+
+            
+            if (centerBank.HasFirstPiece()) {
+                BoardEventManager.AddCenterPenalty?.Invoke();
+                centerBank.RemoveFirstPiece();
+            }
+            centerBank.RemovePiece(piece);
+            centerBank.EnableCenter();
         } else {
             List<PieceController> allBrothers = piece.GetBrothers();
             allBrothers.Add(piece);

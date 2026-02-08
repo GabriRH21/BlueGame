@@ -9,4 +9,5 @@ public static class BoardEventManager
     public static System.Action<BankController> BankSelected;
 
     public static System.Action<int, PieceController> AddPenalty;
+    public static System.Action AddCenterPenalty;
 }

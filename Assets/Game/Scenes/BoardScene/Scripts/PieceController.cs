@@ -107,9 +107,20 @@ public class PieceController : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void FocusAnim(bool active) {
         _hoverFlag = active;
-        _focus.gameObject.SetActive(active);
+
+        try{
+            _focus.gameObject.SetActive(active);
+        } catch (System.Exception e) {
+            Debug.LogError("Something is happening with piece focus, probably when you move it to center bank. Error Code: " + e.Message);
+        }
+        
         if (active) {
-            StartCoroutine(FocusAnimation());
+            try {
+                StartCoroutine(FocusAnimation());
+            }catch (System.Exception e) {
+                Debug.LogError("Something is happening with piece focus, probably when you move it to center bank. Error Code: " + e.Message);
+            }
+            
         } else {
             StartCoroutine(ScaleTo(_focus.rectTransform, 1f, 0f));
         }
